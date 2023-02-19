@@ -17,32 +17,89 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public User Get(int id)
+        
+        public IActionResult Get(int id)
         {
-            return this.UserService.GetUserById(id);
+            User user =  this.UserService.GetUserById(id);
+            if(user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("{letter}")]
+       
+        public IActionResult Get(string letter)
+        {
+            List<User> users =  this.UserService.GetUserNamesStartsWith(letter);
+            if(users.Count> 0)
+            {
+                return Ok(users);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
-        public List<User> Get()
+        public IActionResult Get()
         {
-            return this.UserService.AllUsers();
+            var users = this.UserService.AllUsers();
+            if(users.Count> 0)
+            {
+                return Ok(users);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
-        public bool Post([FromBody] User user) { 
-            return this.UserService.CreateUser(user);
+        public IActionResult Post([FromBody] User user)
+        {
+            var response = this.UserService.CreateUser(user);
+            if (response)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
-        public bool Put([FromBody] User user)
+        public IActionResult Put([FromBody] User user)
         {
-            return this.UserService.UpdateUser(user);
+            var response = this.UserService.UpdateUser(user);
+            if (response)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        [HttpDelete]
-        public bool Delete(int id)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            return this.UserService.DeleteUser(id);
+            var response = this.UserService.DeleteUser(id);
+            if (response)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
 

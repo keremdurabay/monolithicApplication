@@ -17,9 +17,15 @@ namespace DataLayer.Concrete
         {
            using(UserDbContext db = new UserDbContext())
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return true;
+                try
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return true;
+                }catch(Exception)
+                {
+                    return false;
+                }
             }
         }
 
@@ -53,9 +59,16 @@ namespace DataLayer.Concrete
         {
             using(UserDbContext db = new UserDbContext())
             {
-                db.Users.Update(user);
-                db.SaveChanges();
-                return true;
+                if(this.GetUserById(user.UserId) != null) {
+                    db.Users.Update(user);
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
             }
         }
     }
