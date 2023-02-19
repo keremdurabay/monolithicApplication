@@ -13,31 +13,31 @@ namespace BusinessLayer.Concrete
             this.UserRepository = new UserRepository();
         }
 
-        public List<User> AllUsers()
+        public async Task<List<User>> AllUsers()
         {
-            return this.UserRepository.AllUsers();
+            return await this.UserRepository.AllUsers();
         }
 
-        public bool CreateUser(User user)
+        public async Task<int> CreateUser(User user)
         {
-            return this.UserRepository.CreateUser(user);
+            return await this.UserRepository.CreateUser(user);
         }
 
-        public bool DeleteUser(int id)
+        public async Task<int> DeleteUser(int id)
         {
-            return this.UserRepository.DeleteUser(id);
+            return await this.UserRepository.DeleteUser(id);
         }
 
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return this.UserRepository.GetUserById(id);
+            return await this.UserRepository.GetUserById(id);
         }
 
-        public List<User> GetUserNamesStartsWith(string letter)
+        public async Task<List<User>> GetUserNamesStartsWith(string letter)
         {
-            List<User> users = this.UserRepository.AllUsers();
-            List<User> new_users= new List<User>();
-            foreach (User user in users)
+            List<User> new_users = new List<User>();
+
+            foreach (User user in await this.UserRepository.AllUsers())
             {
                 if (user.firstName.StartsWith(letter))
                 {
@@ -47,9 +47,9 @@ namespace BusinessLayer.Concrete
             return new_users;
         }
 
-        public bool UpdateUser(User user)
+        public async Task<int> UpdateUser(User user)
         {
-            return this.UserRepository.UpdateUser(user);
+            return await this.UserRepository.UpdateUser(user);
         }
     }
 }

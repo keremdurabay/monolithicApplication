@@ -1,74 +1,70 @@
 ﻿using DataLayer.Abstract;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace DataLayer.Concrete
 {
     public class UserRepository : IUserRepository
     {
-        public List<User> AllUsers()
+        public async Task<List<User>> AllUsers()
         {
             using (UserDbContext db = new UserDbContext())
             {
-                return db.Users.ToList();
+                return await db.Users.ToListAsync();
             }
         }
 
-        public bool CreateUser(User user)
+        public async Task<int> CreateUser(User user)
         {
-           using(UserDbContext db = new UserDbContext())
+            using (UserDbContext db = new UserDbContext())
             {
-                try
-                {
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    return true;
-                }catch(Exception)
-                {
-                    return false;
-                }
+                await db.Users.AddAsync(user);
+                return await db.SaveChangesAsync();
+
             }
         }
 
-        public bool DeleteUser(int id)
+        public async Task<int> DeleteUser(int id)
         {
-            using(UserDbContext db = new UserDbContext())
+            using (UserDbContext db = new UserDbContext())
             {
-                User user=GetUserById(id);
-                if(user != null)
+                User user = await GetUserById(id);
+                if (user != null)
                 {
                     db.Users.Remove(user);
-                    db.SaveChanges();
-                    return true;
+                    return await db.SaveChangesAsync();
                 }
                 else
                 {
-                    return false;
+                    return await db.SaveChangesAsync();
                 }
             }
         }
 
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
             using (UserDbContext db = new UserDbContext())
             {
-                return db.Users.Find(id);
+                return await db.Users.FindAsync(id);
             }
         }
 
-        public bool UpdateUser(User user)
+        public async Task<int> UpdateUser(User user)
         {
-            using(UserDbContext db = new UserDbContext())
+            using (UserDbContext db = new UserDbContext())
             {
-                if(this.GetUserById(user.UserId) != null) {
+                if (await this.GetUserById(user.UserId) != null)
+                {
                     db.Users.Update(user);
-                    db.SaveChanges();
-                    return true;
+
+                    return await db.SaveChangesAsync();
                 }
                 else
                 {
-                    return false;
+                    return await db.SaveChangesAsync();
+
+
                 }
-                
             }
         }
     }

@@ -18,9 +18,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("{id}")]
         
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            User user =  this.UserService.GetUserById(id);
+            User user =  await this.UserService.GetUserById(id);
             if(user != null)
             {
                 return Ok(user);
@@ -33,9 +33,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("{letter}")]
        
-        public IActionResult GetStartsWith(string letter)
+        public async  Task<IActionResult> GetStartsWith(string letter)
         {
-            List<User> users =  this.UserService.GetUserNamesStartsWith(letter);
+            List<User> users =  await this.UserService.GetUserNamesStartsWith(letter);
             if(users.Count> 0)
             {
                 return Ok(users);
@@ -47,10 +47,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = this.UserService.AllUsers();
-            if(users.Count> 0)
+            var users = await this.UserService.AllUsers();
+            if(users.Count > 0)
             {
                 return Ok(users);
             }
@@ -61,10 +61,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] User user)
         {
-            var response = this.UserService.CreateUser(user);
-            if (response)
+            var response = await this.UserService.CreateUser(user);
+            if (response > 0)
             {
                 return Ok();
             }
@@ -75,10 +75,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] User user)
+        public async Task<IActionResult> Update([FromBody] User user)
         {
-            var response = this.UserService.UpdateUser(user);
-            if (response)
+            var response = await this.UserService.UpdateUser(user);
+            if (response > 0)
             {
                 return Ok();
             }
@@ -89,10 +89,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var response = this.UserService.DeleteUser(id);
-            if (response)
+            var response = await this.UserService.DeleteUser(id);
+            if (response > 0)
             {
                 return Ok();
             }

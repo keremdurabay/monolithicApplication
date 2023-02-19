@@ -3,11 +3,11 @@ namespace DataLayer.Abstract
 {
     public interface IUserRepository
     {
-        User GetUserById(int id);
-        List<User> AllUsers();
-        bool CreateUser(User user);
-        bool UpdateUser(User user);
-        bool DeleteUser(int id);
+        Task<User> GetUserById(int id);
+        Task<List<User>> AllUsers();
+        Task<int> CreateUser(User user);
+        Task<int> UpdateUser(User user);
+        Task<int> DeleteUser(int id);
 
 
     }
