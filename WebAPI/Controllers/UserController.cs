@@ -6,7 +6,7 @@ using Models;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 
         [HttpGet("{id}")]
         
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
             User user =  this.UserService.GetUserById(id);
             if(user != null)
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
 
         [HttpGet("{letter}")]
        
-        public IActionResult Get(string letter)
+        public IActionResult GetStartsWith(string letter)
         {
             List<User> users =  this.UserService.GetUserNamesStartsWith(letter);
             if(users.Count> 0)
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
             var users = this.UserService.AllUsers();
             if(users.Count> 0)
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Create([FromBody] User user)
         {
             var response = this.UserService.CreateUser(user);
             if (response)
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] User user)
+        public IActionResult Update([FromBody] User user)
         {
             var response = this.UserService.UpdateUser(user);
             if (response)
