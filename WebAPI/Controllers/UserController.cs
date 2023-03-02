@@ -1,6 +1,5 @@
-﻿using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
-using Microsoft.AspNetCore.Http;
+﻿using BusinessLayer.Implemantation;
+using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -18,7 +17,7 @@ namespace WebAPI.Controllers
 
         [HttpGet("{id}")]
         
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<User>> GetById(int id)
         {
             User user =  await this.UserService.GetUserById(id);
             if(user != null)
@@ -33,7 +32,7 @@ namespace WebAPI.Controllers
 
         [HttpGet("{letter}")]
        
-        public async  Task<IActionResult> GetStartsWith(string letter)
+        public async  Task<ActionResult<List<User>>> GetStartsWith(string letter)
         {
             List<User> users =  await this.UserService.GetUserNamesStartsWith(letter);
             if(users.Count> 0)
@@ -47,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<User>>> GetAll()
         {
             var users = await this.UserService.AllUsers();
             if(users.Count > 0)
