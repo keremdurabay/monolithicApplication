@@ -1,8 +1,8 @@
-﻿using DataLayer.Abstract;
+﻿using DataLayer.Interface;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
-namespace DataLayer.Concrete
+namespace DataLayer.Implemantation
 {
     public class UserRepository : IUserRepository
     {

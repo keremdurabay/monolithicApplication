@@ -1,5 +1,5 @@
 ﻿using Models;
-namespace DataLayer.Abstract
+namespace DataLayer.Interface
 {
     public interface IUserRepository
     {

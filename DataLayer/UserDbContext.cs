@@ -1,17 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
+﻿using Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataLayer
+namespace DataLayer;
+
+public partial class UserDbContext : DbContext
 {
-    public class UserDbContext : DbContext
+    public UserDbContext()
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-CA4T698\SQLEXPRESS;Database=UsersDB;uid=sa;pwd=1234;Trust Server Certificate=true;");
-        }
-
-        public DbSet<User> Users { get; set; }
-
     }
+
+    public UserDbContext(DbContextOptions<UserDbContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-EPD77HF\\SQLEXPRESS;Database=UsersDB;uid=sa;pwd=1234;Trust Server Certificate=true;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(150)
+                .HasColumnName("firstName");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(150)
+                .HasColumnName("lastName");
+            entity.Ignore(e => e.FullName);
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

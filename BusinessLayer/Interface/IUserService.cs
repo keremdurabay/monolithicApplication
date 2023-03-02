@@ -1,5 +1,5 @@
 ﻿using Models;
-namespace BusinessLayer.Abstract
+namespace BusinessLayer.Interface
 {
     public interface IUserService 
     {

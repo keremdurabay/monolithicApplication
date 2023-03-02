@@ -1,8 +1,8 @@
-﻿using BusinessLayer.Abstract;
-using DataLayer.Abstract;
-using DataLayer.Concrete;
+﻿using BusinessLayer.Interface;
+using DataLayer.Interface;
+using DataLayer.Implemantation;
 using Models;
-namespace BusinessLayer.Concrete
+namespace BusinessLayer.Implemantation
 {
     public class UserService : IUserService 
     {
@@ -39,7 +39,7 @@ namespace BusinessLayer.Concrete
 
             foreach (User user in await this.UserRepository.AllUsers())
             {
-                if (user.firstName.StartsWith(letter))
+                if (user.FirstName.StartsWith(letter))
                 {
                     new_users.Add(user);
                 }
