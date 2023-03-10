@@ -52,7 +52,15 @@ namespace DataLayer.Implemantation
         }
 
         public async Task<int> UpdateUser(User user)
-        {
+        {  
+        
+        //null degerleri yakalamak icin Guard clouse kullanalim
+        //ve nullreference exception dondurelim
+        //https://stackoverflow.com/questions/29184887/best-way-to-check-for-null-parameters-guard-clauses
+        
+        //her iki durumda da savechange fonksiyonu cagiriliyor bu sebeple iki kere yazmaya gerek yok 
+        //best practices geregi kod tekrarindan kacinmamiz gerek
+        
             using (UserDbContext db = new UserDbContext())
             {
                 if (await this.GetUserById(user.UserId) != null)
