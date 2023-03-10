@@ -18,16 +18,16 @@ namespace DataLayer.Implemantation
         {
             using (UserDbContext db = new UserDbContext())
             {
-                User user = await GetUserById(id);
-                if (user != null)
+                var user = await GetUserById(id);
+
+                if (user == null)
                 {
-                    db.Users.Remove(user);
-                    return await db.SaveChangesAsync();
+                    throw new ArgumentNullException(nameof(user));
                 }
-                else
-                {
-                    return await db.SaveChangesAsync();
-                }
+                db.Users.Remove(user);
+                return await db.SaveChangesAsync();
+
+
             }
         }
 
@@ -41,13 +41,18 @@ namespace DataLayer.Implemantation
             }
         }
 
-       
+
 
         public async Task<User> GetUserById(int id)
         {
             using (UserDbContext db = new UserDbContext())
             {
-                return await db.Users.FindAsync(id);
+                var user = await db.Users.FindAsync(id);
+                if (user == null)
+                {
+                    throw new ArgumentNullException(nameof(user));
+                }
+                return user;
             }
         }
 
@@ -55,18 +60,12 @@ namespace DataLayer.Implemantation
         {
             using (UserDbContext db = new UserDbContext())
             {
-                if (await this.GetUserById(user.UserId) != null)
-                {
-                    db.Users.Update(user);
+                _ = await this.GetUserById(user.UserId) ?? throw new ArgumentNullException(nameof(user));
+                db.Users.Update(user);
 
-                    return await db.SaveChangesAsync();
-                }
-                else
-                {
-                    return await db.SaveChangesAsync();
+                return await db.SaveChangesAsync();
 
 
-                }
             }
         }
     }
