@@ -12,7 +12,7 @@ public partial class User
     public string LastName { get; set; } = null!;
     public string FullName
     {
-        get { return FirstName + " " + LastName; }
+        get { return string.Concat(FirstName, " ", LastName); }
         private set { }
     }
 }
