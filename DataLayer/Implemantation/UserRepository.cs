@@ -14,16 +14,6 @@ namespace DataLayer.Implemantation
             }
         }
 
-        public async Task<int> CreateUser(User user)
-        {
-            using (UserDbContext db = new UserDbContext())
-            {
-                await db.Users.AddAsync(user);
-                return await db.SaveChangesAsync();
-
-            }
-        }
-
         public async Task<int> DeleteUser(int id)
         {
             using (UserDbContext db = new UserDbContext())
@@ -40,6 +30,18 @@ namespace DataLayer.Implemantation
                 }
             }
         }
+
+        public async Task<int> CreateUser(User user)
+        {
+            using (UserDbContext db = new UserDbContext())
+            {
+                await db.Users.AddAsync(user);
+                return await db.SaveChangesAsync();
+
+            }
+        }
+
+       
 
         public async Task<User> GetUserById(int id)
         {

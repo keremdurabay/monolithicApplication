@@ -59,6 +59,20 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await this.UserService.DeleteUser(id);
+            if (response > 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] User user)
         {
@@ -87,19 +101,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var response = await this.UserService.DeleteUser(id);
-            if (response > 0)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
+        
 
 
     }
