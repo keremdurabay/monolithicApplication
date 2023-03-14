@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace DataLayer;
 
@@ -13,7 +14,7 @@ public partial class UserDbContext : DbContext
     {
     }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserModel> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
