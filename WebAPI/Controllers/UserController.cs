@@ -9,32 +9,25 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService UserService;
+        private readonly IUserService _userService;
         public UserController()
         {
-            this.UserService = new UserService();
+            this._userService = new UserService();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         
-        public async Task<ActionResult<User>> GetById(int id)
+        public async Task<ActionResult<UserModel>> GetById(int id)
         {
-            User user =  await this.UserService.GetUserById(id);
-            if(user != null)
-            {
-                return Ok(user);
-            }
-            else
-            {
-                return NotFound();
-            }
+            var user =  await this._userService.GetUserById(id);
+            return Ok(user);
         }
 
         [HttpGet("{letter}")]
        
-        public async  Task<ActionResult<List<User>>> GetStartsWith(string letter)
+        public async  Task<ActionResult<List<UserModel>>> GetStartsWith(string letter)
         {
-            List<User> users =  await this.UserService.GetUserNamesStartsWith(letter);
+            var users =  await this._userService.GetUserNamesStartsWith(letter);
             if(users.Count> 0)
             {
                 return Ok(users);
@@ -46,9 +39,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> GetAll()
+        public async Task<ActionResult<List<UserModel>>> GetAll()
         {
-            var users = await this.UserService.AllUsers();
+            var users = await this._userService.AllUsers();
             if(users.Count > 0)
             {
                 return Ok(users);
@@ -59,10 +52,10 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await this.UserService.DeleteUser(id);
+            var response = await this._userService.DeleteUser(id);
             if (response > 0)
             {
                 return Ok();
@@ -74,9 +67,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] UserModel user)
         {
-            var response = await this.UserService.CreateUser(user);
+            var response = await this._userService.CreateUser(user);
             if (response > 0)
             {
                 return Ok();
@@ -88,9 +81,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<IActionResult> Update([FromBody] UserModel user)
         {
-            var response = await this.UserService.UpdateUser(user);
+            var response = await this._userService.UpdateUser(user);
             if (response > 0)
             {
                 return Ok();

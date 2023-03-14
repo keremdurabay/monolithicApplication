@@ -6,50 +6,41 @@ namespace BusinessLayer.Implemantation
 {
     public class UserService : IUserService 
     {
-        private IUserRepository UserRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService()
         {
-            this.UserRepository = new UserRepository();
+            this._userRepository = new UserRepository();
         }
 
-        public async Task<List<User>> AllUsers()
+        public async Task<List<UserModel>> AllUsers()
         {
-            return await this.UserRepository.AllUsers();
+            return await this._userRepository.AllUsers();
         }
 
-        public async Task<int> CreateUser(User user)
+        public async Task<int> CreateUser(UserModel user)
         {
-            return await this.UserRepository.CreateUser(user);
+            return await this._userRepository.CreateUser(user);
         }
 
         public async Task<int> DeleteUser(int id)
         {
-            return await this.UserRepository.DeleteUser(id);
+            return await this._userRepository.DeleteUser(id);
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<UserModel> GetUserById(int id)
         {
-            return await this.UserRepository.GetUserById(id);
+            return await this._userRepository.GetUserById(id);
         }
 
-        public async Task<List<User>> GetUserNamesStartsWith(string letter)
+        public async Task<List<UserModel>> GetUserNamesStartsWith(string letter)
         {
-            List<User> new_users = new List<User>();
-
-            foreach (User user in await this.UserRepository.AllUsers())
-            {
-                if (user.FirstName.StartsWith(letter))
-                {
-                    new_users.Add(user);
-                }
-            }
-            return new_users;
+            return (await this._userRepository.AllUsers()).Where(user => user.FirstName.StartsWith(letter)).ToList();
         }
 
-        public async Task<int> UpdateUser(User user)
+        public async Task<int> UpdateUser(UserModel user)
         {
-            return await this.UserRepository.UpdateUser(user);
+            return await this._userRepository.UpdateUser(user);
         }
     }
 }

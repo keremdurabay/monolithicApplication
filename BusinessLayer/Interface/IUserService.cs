@@ -3,11 +3,11 @@ namespace BusinessLayer.Interface
 {
     public interface IUserService 
     {
-        Task<List<User>> GetUserNamesStartsWith(string letter);
-        Task<User> GetUserById(int id);
-        Task<List<User>> AllUsers();
-        Task<int> CreateUser(User user);
-        Task<int> UpdateUser(User user);
+        Task<List<UserModel>> GetUserNamesStartsWith(string letter);
+        Task<UserModel> GetUserById(int id);
+        Task<List<UserModel>> AllUsers();
+        Task<int> CreateUser(UserModel user);
+        Task<int> UpdateUser(UserModel user);
         Task<int> DeleteUser(int id);
     }
 }
