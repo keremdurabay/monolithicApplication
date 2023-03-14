@@ -7,8 +7,9 @@ public class UserModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int UserId { get; set; }
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string FullName => string.Concat(FirstName, " ", LastName);
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+    public string Surname { get; set; } = null!;
+    public string FullName => string.Concat(Name, " ", Surname);
 }
