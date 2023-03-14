@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace DataLayer;
 
@@ -14,7 +13,7 @@ public partial class UserDbContext : DbContext
     {
     }
 
-    public virtual DbSet<UserModel> Users { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -24,15 +23,14 @@ public partial class UserDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserModel>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Name)
+            entity.Property(e => e.FirstName)
                 .HasMaxLength(150)
                 .HasColumnName("firstName");
-            entity.Property(e => e.Surname)
+            entity.Property(e => e.LastName)
                 .HasMaxLength(150)
                 .HasColumnName("lastName");
-            entity.Ignore(e => e.FullName);
         });
 
         OnModelCreatingPartial(modelBuilder);
