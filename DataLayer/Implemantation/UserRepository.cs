@@ -33,7 +33,6 @@ namespace DataLayer.Implemantation
         }
 
 
-
         public async Task<UserModel> GetUserById(int id)
         {
             await using var db = new UserDbContext();

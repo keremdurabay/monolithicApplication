@@ -9,6 +9,5 @@ namespace DataLayer.Interface
         Task<int> UpdateUser(UserModel user);
         Task<int> DeleteUser(int id);
 
-
     }
 }

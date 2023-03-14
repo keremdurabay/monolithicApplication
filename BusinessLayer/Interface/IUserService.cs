@@ -9,5 +9,6 @@ namespace BusinessLayer.Interface
         Task<int> CreateUser(UserModel user);
         Task<int> UpdateUser(UserModel user);
         Task<int> DeleteUser(int id);
+
     }
 }

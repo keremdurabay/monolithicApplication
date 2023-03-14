@@ -8,12 +8,10 @@ public partial class UserDbContext : DbContext
     public UserDbContext()
     {
     }
-
     public UserDbContext(DbContextOptions<UserDbContext> options)
         : base(options)
     {
     }
-
     public virtual DbSet<UserModel> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,6 +32,5 @@ public partial class UserDbContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
